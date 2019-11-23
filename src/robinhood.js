@@ -531,7 +531,7 @@ function RobinhoodWebApi(opts, callback) {
 
   api.options_available = function (
     chain_id,
-    expiration_date,
+    expiration_dates,
     type = 'put',
     callback
   ) {
@@ -541,7 +541,7 @@ function RobinhoodWebApi(opts, callback) {
           qs: {
             chain_id,
             type,
-            expiration_date,
+            expiration_dates,
             state: 'active',
             tradability: 'tradable'
           }
