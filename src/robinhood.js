@@ -550,6 +550,20 @@ function RobinhoodWebApi(opts, callback) {
       );
   };
 
+  api.option_prices = function (
+    instrument_urls = [],
+    callback
+  ) {
+    return _request.get(
+      {
+        uri: _apiUrl + _endpoints.options_marketdata,
+        qs: {
+          instruments: instrument_urls.join(',')
+        }
+      }
+    )
+  }
+
   api.news = function (symbol, callback) {
     return _request.get(
       {
