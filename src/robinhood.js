@@ -556,10 +556,7 @@ function RobinhoodWebApi(opts, callback) {
   ) {
     return _request.get(
       {
-        uri: _apiUrl + _endpoints.options_marketdata,
-        qs: {
-          instruments: encodeURIComponent(instrument_urls.join(','))
-        }
+        uri: _apiUrl + _endpoints.options_marketdata + '?instruments=' + encodeURIComponent(instrument_urls.join(',')),
       },
       callback
     )
