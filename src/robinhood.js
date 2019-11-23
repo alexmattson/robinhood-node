@@ -532,10 +532,10 @@ function RobinhoodWebApi(opts, callback) {
   api.options_available = function (
     chain_id,
     expiration_date,
-    type = 'put'
+    type = 'put',
+    callback
   ) {
-    return new Promise((resolve, reject) => {
-      let request = _request.get(
+    return _request.get(
         {
           uri: _apiUrl + _endpoints.options_instruments,
           qs: {
@@ -546,14 +546,8 @@ function RobinhoodWebApi(opts, callback) {
             tradability: 'tradable'
           }
         },
-        (err, response, body) =>
-          options_from_chain(body)
-            .then(get_options_details)
-            .then(stitch_options_with_details)
-            .then(resolve)
+        callback
       );
-      console.log();
-    });
   };
 
   api.news = function (symbol, callback) {
