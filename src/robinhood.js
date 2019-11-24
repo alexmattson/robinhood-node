@@ -459,15 +459,16 @@ function RobinhoodWebApi(opts, callback) {
         uri: _apiUrl + _endpoints.orders,
         form: {
           account: _private.account,
-          instrument: options.instrument.url,
-          price: options.bid_price,
-          stop_price: options.stop_price,
-          quantity: options.quantity,
-          side: options.transaction,
           symbol: options.instrument.symbol.toUpperCase(),
           time_in_force: options.time || 'gfd',
           trigger: options.trigger || 'immediate',
-          type: options.type || 'market'
+          type: options.type || 'market',
+          ...options
+          // instrument: options.instrument.url,
+          // price: options.bid_price,
+          // stop_price: options.stop_price,
+          // quantity: options.quantity,
+          // side: options.side,
         }
       },
       callback
@@ -475,12 +476,12 @@ function RobinhoodWebApi(opts, callback) {
   };
 
   api.place_buy_order = function (options, callback) {
-    options.transaction = 'buy';
+    options.side = 'buy';
     return _place_order(options, callback);
   };
 
   api.place_sell_order = function (options, callback) {
-    options.transaction = 'sell';
+    options.side = 'sell';
     return _place_order(options, callback);
   };
 
