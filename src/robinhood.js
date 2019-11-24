@@ -55,6 +55,7 @@ function RobinhoodWebApi(opts, callback) {
       options_positions: 'options/aggregate_positions/',
       options_instruments: 'options/instruments/',
       options_marketdata: 'marketdata/options/',
+      options_orders: 'options/orders/'
 
       watchlists: 'watchlists/',
       positions: 'positions/',
@@ -459,16 +460,15 @@ function RobinhoodWebApi(opts, callback) {
         uri: _apiUrl + _endpoints.orders,
         form: {
           account: _private.account,
+          instrument: options.instrument.url,
+          price: options.bid_price,
+          stop_price: options.stop_price,
+          quantity: options.quantity,
+          side: options.side,
           symbol: options.instrument.symbol.toUpperCase(),
           time_in_force: options.time || 'gfd',
           trigger: options.trigger || 'immediate',
-          type: options.type || 'market',
-          ...options
-          // instrument: options.instrument.url,
-          // price: options.bid_price,
-          // stop_price: options.stop_price,
-          // quantity: options.quantity,
-          // side: options.side,
+          type: options.type || 'market'
         }
       },
       callback
@@ -483,6 +483,32 @@ function RobinhoodWebApi(opts, callback) {
   api.place_sell_order = function (options, callback) {
     options.side = 'sell';
     return _place_order(options, callback);
+  };
+
+  var _place_options_order = function (options, callback) {
+    return _request.post(
+      {
+        uri: _apiUrl + _endpoints.orders,
+        form: {
+          account: _private.account,
+          time_in_force: options.time || 'gfd',
+          trigger: options.trigger || 'immediate',
+          type: options.type || 'market'
+          ...options
+        }
+      },
+      callback
+    );
+  }
+
+  api.place_option_buy_order = function (options, callback) {
+    options.side = 'buy';
+    return _place_options_order(options, callback);
+  };
+
+  api.place_option_sell_order = function (options, callback) {
+    options.side = 'sell';
+    return _place_options_order(options, callback);
   };
 
   api.positions = function (callback) {
