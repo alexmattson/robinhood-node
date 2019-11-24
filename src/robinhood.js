@@ -55,7 +55,7 @@ function RobinhoodWebApi(opts, callback) {
       options_positions: 'options/aggregate_positions/',
       options_instruments: 'options/instruments/',
       options_marketdata: 'marketdata/options/',
-      options_orders: 'options/orders/'
+      options_orders: 'options/orders/',
 
       watchlists: 'watchlists/',
       positions: 'positions/',
